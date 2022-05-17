@@ -30,7 +30,7 @@ zip: clean
 	$(7ZA) a $(ZIPFILE) ./*
 
 run: $(EXECUTABLE)
-	./$(EXECUTABLE)
+	@./$(EXECUTABLE) $(ARGS)
 
 debug: CFLAGS+=-g -O0
 debug: clean
