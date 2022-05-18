@@ -20,6 +20,7 @@ Utilize `make` para compilar o programa e `make run` para iniciá-lo, caso seja 
 - structs em UpperCamelCase (ex: FooBarStruct)
 - abre chaves na mesma linha
 - #defines sempre em caixa alta separados com underscore
+- todos os arquivos de código devem conter no máximo 80 colunas de caracteres
 
 ### Licença de Código
 Todos os códigos desenvolvidos nesse projeto tem a Licença de Código descrita no arquivo LICENSE.txt, conhecida como BSD 3 Clause License.
