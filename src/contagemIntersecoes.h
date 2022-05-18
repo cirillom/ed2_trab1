@@ -5,6 +5,7 @@
 #include <stdio.h>
 
 #include "utils.h"
+#include "lista.h"
 
 /*
  * a struct Intervalo define um intervalo entre dois numeros naturais, de ini
@@ -20,6 +21,6 @@ size_t lerIntervalos(char* arq, Intervalo** out);
 void deletarIntervalos(Intervalo* intervalos);
 
 void contagemIntersecoesArquivo(char* arq_A, char* arq_B, char* arq_out);
-int* contagemIntersecoes(Intervalo* A, Intervalo* B);
+lista* contagemIntersecoes(Intervalo* A, Intervalo* B, size_t nA, size_t nB);
 
 #endif

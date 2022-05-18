@@ -1,6 +1,8 @@
 #ifndef __DADO_H__
 #define __DADO_H__
 
+#include <stdlib.h>
+
 #include "errno.h"
 #include "string.h"
 
