@@ -9,14 +9,14 @@
 
 #define ABORTPROGRAM(...) fatalError(__LINE__, __FILE__, __VA_ARGS__);
 
-#define XALLOC(type, p, size) \
-    (p) = malloc(sizeof(type)*(size)); \
+#define XALLOC(type, p, len) \
+    (p) = malloc(sizeof(type)*(len)); \
     if(!(p)){ \
         ABORTPROGRAM("malloc"); \
     }
 
-#define XREALLOC(type, p, newsize) \
-    (p) = realloc(p, sizeof(type)*newsize); \
+#define XREALLOC(type, p, newlen) \
+    (p) = realloc(p, sizeof(type)*(newlen)); \
     if(!(p)){ \
         ABORTPROGRAM("realloc"); \
     } \
