@@ -12,6 +12,8 @@ typedef struct {
 
 Lista* criarLista(size_t tam);
 Lista* criarListaZerada(size_t tam);
+void printLista(Lista* l);
+void adicionarLista(Lista* l, int n);
 void deletarLista(Lista* l);
 
 #endif

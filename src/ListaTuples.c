@@ -45,10 +45,11 @@ ListaTuples* lerListaTuples(char* arq){
 }
 
 void printListaTuples(ListaTuples* lt){
+    printf("{\n");
     for(size_t i = 0; i < lt->tam; i++){
-        printf("(%d, %d)\n", lt->val[i][0], lt->val[i][1]);
+        printf("  (%d, %d),\n", lt->val[i][0], lt->val[i][1]);
     }
-    printf("\n");
+    printf("}\n\n");
 }
 
 void adicionarListaTuples(ListaTuples* lt, int a, int b){
