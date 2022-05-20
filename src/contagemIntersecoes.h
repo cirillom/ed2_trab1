@@ -7,5 +7,6 @@
 
 void contagemIntersecoesArquivo(char* arq_A, char* arq_B, char* arq_out);
 Lista* contagemIntersecoes(ListaTuples* A, ListaTuples* B);
+Lista* contagemIntersecoesMelhorada(ListaTuples* A, ListaTuples* B);
 
 #endif

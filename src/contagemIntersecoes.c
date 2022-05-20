@@ -1,12 +1,15 @@
 #include <stddef.h>
 #include <stdio.h>
 
-
 #include "contagemIntersecoes.h"
 #include "ordenaNumeros.h"
 #include "Lista.h"
 #include "utils.h"
 #include "ListaTuples.h"
+
+
+int tupleContem(int* ta, int* tb);
+
 
 void contagemIntersecoesArquivo(char* arq_A, char* arq_B, char* arq_out){
     ListaTuples* A = lerListaTuples(arq_A);
@@ -29,29 +32,51 @@ void contagemIntersecoesArquivo(char* arq_A, char* arq_B, char* arq_out){
     deletarListaTuples(A);
 }
 
+int tupleContem(int* ta, int* tb){
+    return ta[1] >= tb[0] && ta[0] <= tb[1];
+}
+
 Lista* contagemIntersecoes(ListaTuples* A, ListaTuples* B){
     Lista* contagens = criarListaZerada(A->tam);
 
     ordenaNumeros(A);
     ordenaNumeros(B);
 
-    printListaTuples(A);
-    printListaTuples(B);
 
     size_t primeiro_ib = 0;
     for(size_t ia = 0; ia < A->tam; ia++){
         for(size_t ib = primeiro_ib; ib < B->tam; ib++){
-            if(A->val[ia][1] < B->val[ib][0] || A->val[ia][0] > B->val[ib][1]){
-                if(contagens->val[ia] == 0){
-                    primeiro_ib = ib;
-                }
-            }else{
+            if(tupleContem(A->val[ia], B->val[ib])){
                 (contagens->val[ia])++;
+            } 
+            else if(contagens->val[ia] == 0){
+                primeiro_ib = ib;
             }
         }
     }
 
-    printLista(contagens);
+    return contagens;
+}
 
+Lista* contagemIntersecoesMelhorada(ListaTuples* A, ListaTuples* B){
+    Lista* contagens = criarListaZerada(A->tam);
+
+    ordenaNumeros(A);
+    ordenaNumeros(B);
+
+
+    size_t ai = 0, bi = 0;
+    while(ai < A->tam && bi < B->tam){
+        if(tupleContem(A->val[ai], B->val[bi])){
+            (contagens->val[ai])++;
+        }
+
+        if(A->val[ai][1] < B->val[bi][1]){
+            ai++;
+        }
+        else{
+            bi++;
+        }
+    }
     return contagens;
 }
