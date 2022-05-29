@@ -58,25 +58,68 @@ Lista* contagemIntersecoes(ListaTuples* A, ListaTuples* B){
     return contagens;
 }
 
+#define EM_A   (0<<31)
+#define EM_B   (1<<31)
+
 Lista* contagemIntersecoesMelhorada(ListaTuples* A, ListaTuples* B){
     Lista* contagens = criarListaZerada(A->tam);
 
-    ordenaNumeros(A);
-    ordenaNumeros(B);
+    ListaTuples* C = criarListaTuples(2*(A->tam+B->tam));
+
+    size_t i = 0;
+    for(size_t ib = 0; ib < B->tam; ib++, i+=2){
+        C->val[i][0] = B->val[ib][0];
+        C->val[i][1] = EM_B|ib;
+        
+        C->val[i+1][0] = B->val[ib][1]+1;
+        C->val[i+1][1] = EM_B|ib;
+    }
+
+    for(size_t ia = 0; ia < A->tam; ia++, i+=2){
+        C->val[i][0] = A->val[ia][0];
+        C->val[i][1] = EM_A|ia;
+        
+        C->val[i+1][0] = A->val[ia][1];
+        C->val[i+1][1] = EM_A|ia;
+    }
 
 
-    size_t ai = 0, bi = 0;
-    while(ai < A->tam && bi < B->tam){
-        if(tupleContem(A->val[ai], B->val[bi])){
-            (contagens->val[ai])++;
+    ordenaNumeros(C);
+    printListaTuples(C);
+
+    Lista* estados_a = criarListaZerada(A->tam);
+    Lista* estados_b = criarListaZerada(B->tam);
+
+    int abertos_b = 0;
+    int fechados_b = 0;
+    for(i = 0; i < C->tam; i++){
+        if(C->val[i][1]&EM_B){
+
+            size_t ib = ((C->val[i][1])<<1)>>1;
+            
+            if(estados_b->val[ib] == 0){
+                estados_b->val[ib] = 1;
+                abertos_b++;
+            }
+            else{
+                fechados_b++;
+            }
         }
+        else {
 
-        if(A->val[ai][1] < B->val[bi][1]){
-            ai++;
-        }
-        else{
-            bi++;
+            size_t ia = ((C->val[i][1])<<1)>>1;
+
+            if(estados_a->val[ia] == 0){
+                estados_a->val[ia] = 1;
+                contagens->val[ia] = fechados_b;
+            }
+            else {
+                contagens->val[ia] = abertos_b - contagens->val[ia];
+            }
         }
     }
+
+    deletarListaTuples(C);
+
     return contagens;
 }
