@@ -11,9 +11,14 @@ ListaTuples* criarListaTuples(size_t tam){
     ListaTuples* lt;
     XALLOC(ListaTuples, lt, 1);
     XALLOC(int*, lt->val, tam);
+
+
+    for(size_t i = 0; i < tam; i++){
+        XALLOC(int, lt->val[i], 2);
+    }
+
     lt->tam = tam;
     lt->tamalocado = tam;
-
     return lt;
 }
 
