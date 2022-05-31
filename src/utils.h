@@ -22,6 +22,7 @@
     } \
 
 
+void mostrarLista(int arr[], int n);
 void fatalError(int line, char* file, char* fmt, ...);
 
 

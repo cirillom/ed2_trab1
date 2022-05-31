@@ -57,6 +57,14 @@ void printListaTuples(ListaTuples* lt){
     printf("}\n\n");
 }
 
+int obterMax(ListaTuples* lt){
+    int mx = lt->val[0][0];
+    for (int i = 1; i < lt->tam; i++)
+        if (lt->val[i][0] > mx)
+            mx = lt->val[i][0];
+    return mx;
+}
+
 void adicionarListaTuples(ListaTuples* lt, int a, int b){
     if(lt->tam == lt->tamalocado){
         lt->tamalocado = (lt->tamalocado == 0)? 2 : lt->tamalocado*2;

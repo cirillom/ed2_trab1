@@ -17,7 +17,6 @@ void contagemIntersecoesArquivo(char* arq_A, char* arq_B, char* arq_out){
 
 
     Lista* contagens = contagemIntersecoes(A, B);
-
     FILE* fp = fopen(arq_out, "w");
     if(fp == NULL){
         ABORTPROGRAM("%s", arq_out);
@@ -41,6 +40,7 @@ Lista* contagemIntersecoes(ListaTuples* A, ListaTuples* B){
 
     ordenaNumeros(A);
     ordenaNumeros(B);
+
 
 
     size_t primeiro_ib = 0;

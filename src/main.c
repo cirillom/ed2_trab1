@@ -2,6 +2,8 @@
 #include <stdlib.h>
 
 #include "contagemIntersecoes.h"
+#include "ordenaNumeros.h"
+#include "utils.h"
 
 
 int main(){
