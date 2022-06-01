@@ -31,8 +31,9 @@ void ordenaDigitos(ListaTuples* lt, int exp){
 }
 
 void ordenaNumeros(ListaTuples* lt){
-    int m = obterMax(lt);
-  
+    size_t indice_max = obterMax(lt);
+    int m = lt->val[indice_max][0];
+
     for (int exp = 1; m / exp > 0; exp *= 10)
         ordenaDigitos(lt, exp);
 }

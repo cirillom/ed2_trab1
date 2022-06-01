@@ -6,16 +6,16 @@
 #include "utils.h"
 
 
-void fatalError(int line, char* file, char* fmt, ...){
-    int init_errno = errno; //errno pode mudar de valor em vfprintf
+void erroFatal(int linha, char* arq, char* fmt, ...){
+    int errno_inicial = errno; //errno pode mudar de valor nos printfs
 
     va_list ap;
 
     va_start(ap, fmt);
 
-    fprintf(stderr, "Error at line %d of file %s: ", line, file);
+    fprintf(stderr, "Erro na linha %d do arquivo %s: ", linha, arq);
     vfprintf(stderr, fmt, ap);
-    printf(": %s\n", strerror(init_errno));
+    fprintf(stderr, ": %s\n", strerror(errno_inicial));
 
     va_end(ap);
 

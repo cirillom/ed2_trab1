@@ -44,7 +44,7 @@ ListaTuples* lerListaTuples(char* arq){
         }
         if(ret < 2){
             errno = EINVAL;
-            ABORTPROGRAM("arq %s index %d", arq, lt->tam);
+            ABORTPROGRAM("arq %s inice %d", arq, lt->tam);
         }
         
         adicionarListaTuples(lt, lidos);
@@ -57,21 +57,28 @@ ListaTuples* lerListaTuples(char* arq){
 void printListaTuples(ListaTuples* lt){
     printf("{\n");
     for(size_t i = 0; i < lt->tam; i++){
-        printf("  (%d, %d),\n", lt->val[i][0], lt->val[i][1]);
+        printf("  (");
+
+        for(size_t j = 0; j < lt->col; j++){
+            printf("%d, ", lt->val[i][j]);
+        }
+
+        printf("\b\b)\n");
     }
-    printf("}\n\n");
+    printf("\n}\n\n");
 }
 
-int obterMax(ListaTuples* lt){
-    int mx = lt->val[0][0];
+size_t obterMax(ListaTuples* lt){
+    size_t mx = 0;
     for (size_t i = 1; i < lt->tam; i++)
-        if (lt->val[i][0] > mx)
-            mx = lt->val[i][0];
+        if (lt->val[i][0] > lt->val[i][mx])
+            mx = i;
     return mx;
 }
 
 void adicionarListaTuples(ListaTuples* lt, int* c){
     if(lt->tam == lt->tamalocado){
+        //feito pelo mesmo raciocinio de uso de memoria que em Lista.c
         lt->tamalocado = (lt->tamalocado == 0)? 2 : lt->tamalocado*2;
         XREALLOC(int*, lt->val, lt->tamalocado);
     }

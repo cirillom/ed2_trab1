@@ -33,6 +33,9 @@ void printLista(Lista* l){
 
 void adicionarLista(Lista* l, int n){
     if(l->tam == l->tamalocado){
+        //se o tamanho alocado for igual ao tamanho utilizado, aloca o dobro do
+        //tamanho utilizado, isso nao e ideal para aplicacoes muito grandes mas
+        //para uma lista que utilize ate 400Mb e aceitavel
         l->tamalocado = (l->tamalocado == 0)? 2 : l->tamalocado*2;
         XREALLOC(int, l->val, l->tamalocado);
     }
