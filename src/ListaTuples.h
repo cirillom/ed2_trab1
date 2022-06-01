@@ -5,15 +5,16 @@
 
 typedef struct {
     int** val;
-    int tam;
+    size_t tam;
     size_t tamalocado;
+    size_t col;
 } ListaTuples;
 
-ListaTuples* criarListaTuples(size_t tam);
+ListaTuples* criarListaTuples(size_t tam, size_t col);
 ListaTuples* lerListaTuples(char* arq);
 void printListaTuples(ListaTuples* lt);
 int obterMax(ListaTuples* lt);
-void adicionarListaTuples(ListaTuples* lt, int a, int b);
+void adicionarListaTuples(ListaTuples* lt, int* c);
 void deletarListaTuples(ListaTuples* lt);
 
 #endif

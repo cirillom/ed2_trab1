@@ -7,6 +7,9 @@
 #include "utils.h"
 #include "ListaTuples.h"
 
+#define EM_A 1
+#define EM_B 0
+
 
 int tupleContem(int* ta, int* tb);
 
@@ -36,11 +39,15 @@ int tupleContem(int* ta, int* tb){
 }
 
 Lista* contagemIntersecoes(ListaTuples* A, ListaTuples* B){
+    if(B->col != 2 || A->col != 2){
+        errno = EINVAL;
+        ABORTPROGRAM("collums in A or B");
+    }
+
     Lista* contagens = criarListaZerada(A->tam);
 
     ordenaNumeros(A);
     ordenaNumeros(B);
-
 
 
     size_t primeiro_ib = 0;
@@ -58,29 +65,35 @@ Lista* contagemIntersecoes(ListaTuples* A, ListaTuples* B){
     return contagens;
 }
 
-#define EM_A   (0<<31)
-#define EM_B   (1<<31)
-
 Lista* contagemIntersecoesMelhorada(ListaTuples* A, ListaTuples* B){
+    if(B->col != 2 || A->col != 2){
+        errno = EINVAL;
+        ABORTPROGRAM("collums in A or B");
+    }
+
     Lista* contagens = criarListaZerada(A->tam);
 
-    ListaTuples* C = criarListaTuples(2*(A->tam+B->tam));
+    ListaTuples* C = criarListaTuples(2*(A->tam+B->tam), 3);
 
     size_t i = 0;
     for(size_t ib = 0; ib < B->tam; ib++, i+=2){
         C->val[i][0] = B->val[ib][0];
-        C->val[i][1] = EM_B|ib;
+        C->val[i][1] = ib;
+        C->val[i][2] = EM_B;
         
         C->val[i+1][0] = B->val[ib][1]+1;
-        C->val[i+1][1] = EM_B|ib;
+        C->val[i+1][1] = ib;
+        C->val[i+1][2] = EM_B;
     }
 
     for(size_t ia = 0; ia < A->tam; ia++, i+=2){
         C->val[i][0] = A->val[ia][0];
-        C->val[i][1] = EM_A|ia;
+        C->val[i][1] = ia;
+        C->val[i][2] = EM_A;
         
         C->val[i+1][0] = A->val[ia][1];
-        C->val[i+1][1] = EM_A|ia;
+        C->val[i+1][1] = ia;
+        C->val[i+1][2] = EM_A;
     }
 
 
@@ -93,9 +106,9 @@ Lista* contagemIntersecoesMelhorada(ListaTuples* A, ListaTuples* B){
     int abertos_b = 0;
     int fechados_b = 0;
     for(i = 0; i < C->tam; i++){
-        if(C->val[i][1]&EM_B){
+        if(C->val[i][2] == EM_B){
 
-            size_t ib = ((C->val[i][1])<<1)>>1;
+            size_t ib = C->val[i][1];
             
             if(estados_b->val[ib] == 0){
                 estados_b->val[ib] = 1;
@@ -107,7 +120,7 @@ Lista* contagemIntersecoesMelhorada(ListaTuples* A, ListaTuples* B){
         }
         else {
 
-            size_t ia = ((C->val[i][1])<<1)>>1;
+            size_t ia = C->val[i][1];
 
             if(estados_a->val[ia] == 0){
                 estados_a->val[ia] = 1;
