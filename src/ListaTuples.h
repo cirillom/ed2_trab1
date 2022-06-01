@@ -23,6 +23,11 @@ ListaTuples* criarListaTuples(size_t tam, size_t col);
 //lerListaTuples le uma ListaTuples de duas colunas de um arquivo de nome arq
 ListaTuples* lerListaTuples(char* arq);
 
+//gerarListaTuplesAleat gera uma ListaTuples de tamanho tam e col colunas e
+//coloca valores aletorios nas entradas, sendo que, se cresc for 1, uma mesma
+//tuple terá valores crescentes
+ListaTuples* gerarListaTuplesAleat(size_t tam, size_t col, int cresc);
+
 //printListaTuples coloca na tela os valores de uma ListaTuples
 void printListaTuples(ListaTuples* lt);
 

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
+#include <time.h>
 
 #include "ListaTuples.h"
 #include "utils.h"
@@ -9,7 +10,8 @@
 
 ListaTuples* criarListaTuples(size_t tam, size_t col){
     if(col < 2){
-        return NULL;
+        errno = EINVAL;
+        ABORTPROGRAM("cols");
     }
 
     ListaTuples* lt;
@@ -54,6 +56,24 @@ ListaTuples* lerListaTuples(char* arq){
     return lt;
 }
 
+ListaTuples* gerarListaTuplesAleat(size_t tam, size_t col, int cresc){
+    srand(time(NULL));
+
+    ListaTuples* lt = criarListaTuples(tam, col);
+
+    for(size_t i = 0; i < lt->tam; i++){
+        int min = 0;
+        for(size_t j = 0; j < lt->col; j++){
+            //valores em listaTuples
+            lt->val[i][j] = rand() % (RAND_MAX-min);
+            if(cresc && lt->val[i][j] < min){
+                min = lt->val[i][j];
+            }
+        }
+    }
+    return lt;
+}
+
 void printListaTuples(ListaTuples* lt){
     printf("{\n");
     for(size_t i = 0; i < lt->tam; i++){
@@ -65,7 +85,7 @@ void printListaTuples(ListaTuples* lt){
 
         printf("\b\b)\n");
     }
-    printf("\n}\n\n");
+    printf("}\n\n");
 }
 
 size_t obterMax(ListaTuples* lt){

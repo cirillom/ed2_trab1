@@ -1,42 +1,48 @@
 
-RM     = rm -f
-MKDIR  = mkdir -p
-7ZA    = 7za
-CC    ?= gcc
-
-BUILDD ?= build
-SRCD   ?= src
-
-PROGNAME   ?= main
-EXECUTABLE ?= $(BUILDD)/$(PROGNAME)
-ZIPFILE    ?= ../zipfile.zip
-CFILES      = $(wildcard $(SRCD)/*.c)
-OFILES      = $(patsubst %.c,%.o, $(CFILES))
-
-
+CC ?= gcc
 CFLAGS += -Wall -Wextra -Wpedantic
 
+EXECUTABLE ?= build/main
+TEST_CFILES = $(wildcard src/*_teste.c)
+TEST_OFILES = $(patsubst src/%_teste.c, build/%_teste.o, $(TEST_CFILES))
+TEST_BINS   = $(patsubst src/%_teste.c, build/%, $(TEST_CFILES))
 
-.PHONY: all clean zip run debug
+ZIPFILE    ?= ../zipfile.zip
+CFILES      = $(filter-out %_teste.c, $(wildcard src/*.c))
+OFILES      = $(patsubst src/%.c,build/%.o, $(CFILES))
+
+
+.PHONY: all clean zip run test debug
 
 all: $(EXECUTABLE)
 
 clean:
-	@$(RM) $(OFILES)
-	@$(RM) $(ZIPFILE)
-	@$(RM) -r $(BUILDD)
+	@rm -f $(ZIPFILE)
+	@rm -rf build/
 
 zip: clean
-	$(7ZA) a $(ZIPFILE) ./*
+	7za a $(ZIPFILE) ./*
 
 run: $(EXECUTABLE)
 	@./$(EXECUTABLE) $(ARGS)
 
+test: $(TEST_BINS)
+
 debug: CFLAGS+=-g -O0
 debug: clean
-debug: $(EXECUTABLE)
+debug: $(EXECUTABLE) test
 
 
 $(EXECUTABLE): $(OFILES)
-	@$(MKDIR) $(BUILDD)
-	$(CC) $(LDFLAGS) $(OFILES) -o $(EXECUTABLE)
+	@mkdir -p build
+	$(CC) $(LDFLAGS) -o $@ $^
+
+
+build/%: $(filter-out build/main.o, $(OFILES)) build/%_teste.o
+	@mkdir -p build
+	$(CC) $(LDFLAGS) -o $@ $^	
+
+
+build/%.o: src/%.c
+	@mkdir -p build
+	$(CC) $(CFLAGS) -c -o $@ $^
