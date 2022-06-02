@@ -60,19 +60,12 @@ Lista* contagemIntersecoes(ListaTuples* A, ListaTuples* B){
     ordenaNumeros(A);
     ordenaNumeros(B);
 
-
-    size_t primeiro_ib = 0;
     for(size_t ia = 0; ia < A->tam; ia++){
-        for(size_t ib = primeiro_ib; ib < B->tam; ib++){
-
+        for(size_t ib = 0; ib < B->tam; ib++){
             //para cada elemento de A e B, ve se um esta contido no outro 
             if(tupleContem(A->val[ia], B->val[ib])){
                 (contagens->val[ia])++;
             } 
-            else if(contagens->val[ia] == 0){
-                //guarda o ultimo ib que nao estava contido no A[ia] anteirior
-                primeiro_ib = ib;
-            }
         }
     }
 
