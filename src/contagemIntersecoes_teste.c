@@ -5,6 +5,18 @@
 #include "contagemIntersecoes.h"
 #include "utils.h"
 
+const char* help = 
+"argumentos de linha de comando:\n"
+"1) numero de testes a se fazer\n"
+"2) numero de elementos nas ListaTuples A e B\n"
+"3) (opcional) incremento em multiplos de argv[2] para se fazer a cada teste\n"
+"4) (opcional) numero de testes a se fazer antes de aplicar o incremento\n"
+"5) (opcional) valor maximo contido nas ListaTuples aleatorias A e B\n"
+"exemplo: %s 10 1000 2 5\n"
+"o exemplo vai realizar 10*5 testes e mostrar 10 tempos na tela, sendo que a\n"
+"cada 5 testes ele coloca a media dos tempos na tela e multiplica o numero\n"
+"de elementos por 2\n";
+
 
 void gerarDumpInputs(ListaTuples* A, ListaTuples* B, char* nome_arq){
     FILE* arq = fopen(nome_arq, "w");
@@ -26,28 +38,23 @@ void gerarDump(Lista* l, char* nome_arq){
     printLista(l, arq);
 }
 
-/*
- * argumentos:
- * 1) numero de testes a se fazer
- * 2) numero de elementos nas ListaTuples A e B
- * 3) (opcional) incremento em multiplos de argv[2] para se fazer a cada teste
- * 4) (opcional) numero de testes a se fazer antes de aplicar o incremento
- * 5) (opcional) valor maximo contido nas ListaTuples aleatorias A e B
- * exemplo: ./main 10 1000 2 5
- * o exemplo vai realizar 10*5 testes e mostrar 10 tempos na tela, sendo que a
- * cada 5 testes ele coloca a media dos tempos na tela e multiplica o numero de
- * elementos por 2
- */
+
 int main(int argc, char** argv){
     srand(time(NULL));
 
+    if(strcmp("-h", argv[1]) == 0 || strcmp("--help", argv[1]) == 0){
+        printf(help, argv[0]);
+        exit(0);
+    }
+
     int testes, elementos;
-    int incremento = 1, testes_por_incremento = 1;
+    float incremento = 1;
+    int testes_por_incremento = 1;
     int max = RAND_MAX;
 
     if(argc < 3|| argc > 6){
-        fprintf(stderr, "argc deve estar entre 3 e 6");
-        exit(1);
+        printf(help, argv[0]);
+        exit(0);
     }
     if(argc == 6){
         max = atoi(argv[5]);
@@ -56,7 +63,7 @@ int main(int argc, char** argv){
         testes_por_incremento = atoi(argv[4]);
     }
     if(argc >= 4){
-        incremento = atoi(argv[3]);
+        incremento = atof(argv[3]);
     }
 
     elementos = atoi(argv[2]);
@@ -76,21 +83,22 @@ int main(int argc, char** argv){
 
             inicio = clock();
             Lista* contagens_melhorada = contagemIntersecoesMelhorada(A, B);
-            tempo_melhorada += clock() - inicio;
+            tempo_melhorada += clock() - inicio;     
 
             if(compararListas(contagens_normal, contagens_melhorada) != 1){
                 fprintf(stderr, "Erro! Listas nao sao iguais!\n");
                 fprintf(stderr, "gerando dump\n");
                 gerarDumpInputs(A, B, "build/input.txt");
                 gerarDump(contagens_normal, "build/normal.txt");
-                gerarDump(contagens_melhorada, "build/melhorara.txt");
+                gerarDump(contagens_melhorada, "build/melhorada.txt");
                 exit(-1);
             }
         }
         tempo_normal /= testes_por_incremento;
         tempo_melhorada /= testes_por_incremento;
 
-        printf("normal = %ld, melhorada = %ld\n", tempo_normal, tempo_melhorada);
+        printf("normal = %.6lf, ", (double) tempo_normal/CLOCKS_PER_SEC);
+        printf("melhorada = %.6lf\n", (double) tempo_melhorada/CLOCKS_PER_SEC);
 
         elementos *= incremento;
     }
