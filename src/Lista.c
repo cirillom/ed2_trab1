@@ -23,12 +23,16 @@ Lista* criarListaZerada(size_t tam){
     return l;
 }
 
-void printLista(Lista* l){
-    printf("{");
+void printLista(Lista* l, FILE* arq){
+    fprintf(arq, "{");
     for(size_t i = 0; i < l->tam; i++){
-        printf("%d, ", l->val[i]);
+        fprintf(arq, "%d", l->val[i]);
+        
+        if(i != l->tam - 1){
+            fprintf(arq, ", ");
+        }
     }
-    printf("\b\b}\n");
+    fprintf(arq, "}\n");
 }
 
 void adicionarLista(Lista* l, int n){
@@ -42,6 +46,20 @@ void adicionarLista(Lista* l, int n){
 
     l->val[l->tam] = n;
     l->tam++;
+}
+
+int compararListas(Lista* a, Lista* b){
+    if(a->tam != b->tam){
+        return 0;
+    }
+
+    for(size_t i = 0; i < a->tam; i++){
+        if(a->val[i] != b->val[i]){
+            return 0;
+        }
+    }
+
+    return 1;
 }
 
 void deletarLista(Lista *l){

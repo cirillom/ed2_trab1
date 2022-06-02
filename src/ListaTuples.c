@@ -56,36 +56,40 @@ ListaTuples* lerListaTuples(char* arq){
     return lt;
 }
 
-ListaTuples* gerarListaTuplesAleat(size_t tam, size_t col, int cresc){
-    srand(time(NULL));
-
+ListaTuples* gerarListaTuplesAleat(size_t tam, size_t col, int cresc, int max){
     ListaTuples* lt = criarListaTuples(tam, col);
 
     for(size_t i = 0; i < lt->tam; i++){
-        int min = 0;
         for(size_t j = 0; j < lt->col; j++){
-            //valores em listaTuples
-            lt->val[i][j] = rand() % (RAND_MAX-min);
-            if(cresc && lt->val[i][j] < min){
-                min = lt->val[i][j];
+            //valores em listaTuples            
+            if(cresc){
+                int prev = (j == 0)? 0: lt->val[i][j-1];
+                lt->val[i][j] = rand() % (max-prev) + prev;
+            }
+            else{
+                lt->val[i][j] = rand();
             }
         }
     }
     return lt;
 }
 
-void printListaTuples(ListaTuples* lt){
-    printf("{\n");
+void printListaTuples(ListaTuples* lt, FILE* arq){
+    fprintf(arq, "{\n");
     for(size_t i = 0; i < lt->tam; i++){
-        printf("  (");
+        fprintf(arq, "  (");
 
         for(size_t j = 0; j < lt->col; j++){
-            printf("%d, ", lt->val[i][j]);
+            fprintf(arq, "%d", lt->val[i][j]);
+            
+            if(j != lt->col-1){
+                fprintf(arq, ", ");
+            }
         }
 
-        printf("\b\b)\n");
+        fprintf(arq, ")\n");
     }
-    printf("}\n\n");
+    fprintf(arq, "}\n\n");
 }
 
 size_t obterMax(ListaTuples* lt){

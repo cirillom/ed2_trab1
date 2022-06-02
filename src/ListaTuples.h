@@ -2,6 +2,7 @@
 #define __LISTA_TUPLES_H__
 
 #include <stddef.h>
+#include <stdio.h>
 
 
 //a struct ListaTuples representa uma lista de listas de numeros inteiros de
@@ -23,13 +24,15 @@ ListaTuples* criarListaTuples(size_t tam, size_t col);
 //lerListaTuples le uma ListaTuples de duas colunas de um arquivo de nome arq
 ListaTuples* lerListaTuples(char* arq);
 
-//gerarListaTuplesAleat gera uma ListaTuples de tamanho tam e col colunas e
-//coloca valores aletorios nas entradas, sendo que, se cresc for 1, uma mesma
-//tuple terá valores crescentes
-ListaTuples* gerarListaTuplesAleat(size_t tam, size_t col, int cresc);
+/*
+ * gerarListaTuplesAleat gera uma ListaTuples de tamanho tam e col colunas entre
+ * 0 e max inclusivo e coloca valores aletorios nas entradas, sendo que, se 
+ * cresc for 1, uma mesma tuple terá valores crescentes
+ */
+ListaTuples* gerarListaTuplesAleat(size_t tam, size_t col, int cresc, int max);
 
-//printListaTuples coloca na tela os valores de uma ListaTuples
-void printListaTuples(ListaTuples* lt);
+//printListaTuples coloca em um arquivo arq os valores de uma ListaTuples
+void printListaTuples(ListaTuples* lt, FILE* arq);
 
 //obterMax retorna o indice com o valor maximo de uma ListaTuples, considerando
 //o conceito de maximo e minimo dependente do primeiro elemento somente
