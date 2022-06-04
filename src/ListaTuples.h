@@ -34,9 +34,8 @@ ListaTuples* gerarListaTuplesAleat(size_t tam, size_t col, int cresc, int max);
 //printListaTuples coloca em um arquivo arq os valores de uma ListaTuples
 void printListaTuples(ListaTuples* lt, FILE* arq);
 
-//obterMax retorna o indice com o valor maximo de uma ListaTuples, considerando
-//o conceito de maximo e minimo dependente do primeiro elemento somente
-size_t obterMax(ListaTuples* lt);
+//obterMax retorna o valor maximo de uma ListaTuples
+int obterMax(ListaTuples* lt);
 
 //adicionarListaTuples adiciona no final de lt uma nova tuple c,
 //aumentando o tamanho de lt em um

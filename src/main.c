@@ -7,5 +7,10 @@
 
 
 int main(){
-    contagemIntersecoesArquivo("res/A.csv", "res/B.csv", "build/out.csv");
+    //contagemIntersecoesArquivo("res/A.csv", "res/B.csv", "build/out.csv");
+    ListaTuples* A = lerListaTuples("res/t.csv");
+    ordenaNumeros(A);
+    for(size_t i = 0; i < A->tam; i++){
+        printf("%d, %d\n", A->val[i][0], A->val[i][1]);
+    }
 }
