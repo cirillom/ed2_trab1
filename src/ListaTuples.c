@@ -95,10 +95,9 @@ void printListaTuples(ListaTuples* lt, FILE* arq){
 int obterMax(ListaTuples* lt){
     int mx = lt->val[0][0];
 
-    for(size_t j = 0; j < lt->col; j++)
-        for (size_t i = 1; i < lt->tam; i++)
-            if (lt->val[i][0] > mx)
-                mx = lt->val[i][j];
+    for (size_t i = 1; i < lt->tam; i++)
+        if (lt->val[i][0] > mx)
+            mx = lt->val[i][0];
 
     return mx;
 }
