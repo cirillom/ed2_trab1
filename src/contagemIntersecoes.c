@@ -159,6 +159,8 @@ Lista* contagemIntersecoesMelhorada(ListaTuples* A, ListaTuples* B){
     }
 
     deletarListaTuples(C);
+    deletarLista(estados_a);
+    deletarLista(estados_b);
 
     return contagens;
 }

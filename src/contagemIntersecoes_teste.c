@@ -92,6 +92,11 @@ int main(int argc, char** argv){
                 gerarDump(contagens_melhorada, "build/melhorada.txt");
                 exit(-1);
             }
+
+            deletarLista(contagens_melhorada);
+            deletarLista(contagens_normal);
+            deletarListaTuples(A);
+            deletarListaTuples(B);
         }
         tempo_normal /= testes_por_incremento;
         tempo_melhorada /= testes_por_incremento;
