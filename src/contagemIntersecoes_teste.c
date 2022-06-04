@@ -5,7 +5,7 @@
 #include "contagemIntersecoes.h"
 #include "utils.h"
 
-const char* help = 
+const char* ajuda = 
 "argumentos de linha de comando:\n"
 "1) numero de testes a se fazer\n"
 "2) numero de elementos nas ListaTuples A e B\n"
@@ -42,8 +42,11 @@ void gerarDump(Lista* l, char* nome_arq){
 int main(int argc, char** argv){
     srand(time(NULL));
 
-    if(strcmp("-h", argv[1]) == 0 || strcmp("--help", argv[1]) == 0){
-        printf(help, argv[0]);
+    if( argc < 3 || argc > 6 ||
+        strcmp("-h", argv[1]) == 0 ||
+        strcmp("--help", argv[1]) == 0
+    ){
+        printf(ajuda, argv[0]);
         exit(0);
     }
 
@@ -52,10 +55,6 @@ int main(int argc, char** argv){
     int testes_por_incremento = 1;
     int max = RAND_MAX;
 
-    if(argc < 3|| argc > 6){
-        printf(help, argv[0]);
-        exit(0);
-    }
     if(argc == 6){
         max = atoi(argv[5]);
     }
