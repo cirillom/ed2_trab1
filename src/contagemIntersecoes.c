@@ -19,9 +19,15 @@ int tupleContem(int* ta, int* tb);
 
 
 void contagemIntersecoesArquivo(char* arq_A, char* arq_B, char* arq_out){
+    //?printf("%s and %s\n", arq_A, arq_B);
+    
     ListaTuples* A = lerListaTuples(arq_A);
     ListaTuples* B = lerListaTuples(arq_B);
 
+    /*printf("\nA: ");
+    printListaTuples(A, stdout);
+    printf("\n\nB: ");
+    printListaTuples(B, stdout);*/
 
     Lista* contagens = contagemIntersecoes(A, B);
     
@@ -58,7 +64,11 @@ Lista* contagemIntersecoes(ListaTuples* A, ListaTuples* B){
 
     //ordena ambas as ListaTuples
     ordenaNumeros(A);
+    /*printf("\nA:");
+    printListaTuples(A, stdout);*/
     ordenaNumeros(B);
+    /*printf("\nB:");
+    printListaTuples(B, stdout);*/
 
     for(size_t ia = 0; ia < A->tam; ia++){
         for(size_t ib = 0; ib < B->tam; ib++){

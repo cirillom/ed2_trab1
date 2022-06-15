@@ -2,15 +2,11 @@
 #include <stdlib.h>
 
 #include "contagemIntersecoes.h"
+#include "contagemLeituras.h"
 #include "ordenaNumeros.h"
 #include "utils.h"
 
 
 int main(){
-    //contagemIntersecoesArquivo("res/A.csv", "res/B.csv", "build/out.csv");
-    ListaTuples* A = lerListaTuples("res/t.csv");
-    ordenaNumeros(A);
-    for(size_t i = 0; i < A->tam; i++){
-        printf("%d, %d\n", A->val[i][0], A->val[i][1]);
-    }
+    contagemLeituras("res/genoma_pequeno.txt", "res/pos_genes_pequeno.csv", "res/fragmentos_pequeno.txt", "build/pos_fragmentos.csv", "build/out.txt");
 }

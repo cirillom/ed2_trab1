@@ -30,6 +30,7 @@ ListaTuples* criarListaTuples(size_t tam, size_t col){
 }
 
 ListaTuples* lerListaTuples(char* arq){
+    //?printf("%s\n\n", arq);
     FILE* fp = fopen(arq, "r");
     if(fp == NULL){
         ABORTPROGRAM("%s", arq);
@@ -49,6 +50,7 @@ ListaTuples* lerListaTuples(char* arq){
             ABORTPROGRAM("arq %s inice %d", arq, lt->tam);
         }
         
+        //?printf("%s: %d,%d\n", arq, lidos[0], lidos[1]);
         adicionarListaTuples(lt, lidos);
     }
     

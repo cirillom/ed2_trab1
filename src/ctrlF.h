@@ -3,6 +3,6 @@
 
 #include <stdio.h>
 
-void ctrlF(FILE* texto, FILE* trechos,FILE* saida);
+void ctrlF(char* arq_texto, char* arq_trechos, char* arq_saida);
 
 #endif
