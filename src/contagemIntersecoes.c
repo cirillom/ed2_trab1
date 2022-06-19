@@ -18,18 +18,12 @@
 int tupleContem(int* ta, int* tb);
 
 
-void contagemIntersecoesArquivo(char* arq_A, char* arq_B, char* arq_out){
-    //?printf("%s and %s\n", arq_A, arq_B);
-    
+void contagemIntersecoesArquivo(char* arq_A, char* arq_B, char* arq_out){    
+
     ListaTuples* A = lerListaTuples(arq_A);
     ListaTuples* B = lerListaTuples(arq_B);
 
-    /*printf("\nA: ");
-    printListaTuples(A, stdout);
-    printf("\n\nB: ");
-    printListaTuples(B, stdout);*/
-
-    Lista* contagens = contagemIntersecoes(A, B);
+    Lista* contagens = contagemIntersecoesMelhorada(A, B);
     
     //abre o arquivo de saida
     FILE* fp = fopen(arq_out, "w");
