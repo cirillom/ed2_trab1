@@ -15,9 +15,11 @@ void ctrlF(char* arq_texto, char* arq_trechos, char* arq_saida){
     FILE* fp_saida = fopen(arq_saida, "w");
     if(fp_saida == NULL) ABORTPROGRAM("%s", arq_saida);
     
-    char* textoString = malloc(sizeof(char)*(CountCharFile(fp_texto) + 1));
+    int countChar = CountCharFile(fp_texto) + 1;
 
-    fgets(textoString,sizeof(textoString),fp_texto);
+    char* textoString = malloc(sizeof(char)*countChar);
+
+    fgets(textoString,countChar,fp_texto);
 
     int numberOfLinesInTrechos = CountLinesFile(fp_trechos);
 

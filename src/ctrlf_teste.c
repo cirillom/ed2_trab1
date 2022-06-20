@@ -10,6 +10,6 @@
 
 
 int main(){
-    ctrlF("res/nomes.txt", "res/nomesFragmentos.txt","build/pos_fragmentos.csv");
-    ctrlFStrStr("res/nomes.txt", "res/nomesFragmentos.txt","build/pos_fragmentos_strstr.csv");
+    ctrlF("res/genoma_grande.txt", "res/fragmentos_grande.txt","build/pos_fragmentos.csv");
+    ctrlFStrStr("res/genoma_grande.txt", "res/fragmentos_grande.txt","build/pos_fragmentos_strstr.csv");
 }
