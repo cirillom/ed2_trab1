@@ -14,9 +14,8 @@ pol = np.polyfit(df["n"], df["t"], 2)
 x = np.array([i for i in range(first, last)])
 y = (lambda i: pol[0]*i**2+pol[1]*i+pol[2])(x)
 
-print(f"{pol[0]:.10f}*x {'+' if pol[1]>0 else '-'} {abs(pol[1]):.4f}")
+print(f"{pol[0]:.10f}*x^2 + {pol[1]:.4f}*x + {pol[2]:.4f}")
 plt.plot(x, y)
-#plt.ticklabel_format(axis='x', style='plain');
 
 plt.xlabel("Elementos")
 plt.ylabel("Tempo (s)")
