@@ -46,3 +46,6 @@ build/%: $(filter-out build/main.o, $(OFILES)) build/%_teste.o
 build/%.o: src/%.c
 	@mkdir -p build
 	$(CC) $(CFLAGS) -c -o $@ $^
+
+valgrind: $(EXECUTABLE)
+	cd $(BUILDD) && valgrind $(VDFLAGS) ./$(PROGNAME)
