@@ -51,6 +51,7 @@ void ctrlF(char* arq_texto, char* arq_trechos, char* arq_saida){
             }
             if(trechoString[k] == '\0'){
                 fprintf(fp_saida,"%d,%d\n",j,j+k - 1);
+                break;
             }
             j+=1;
         }
@@ -132,13 +133,13 @@ void ctrlFStrStr(char* arq_texto, char* arq_trechos, char* arq_saida){
         
         fgetc(fp_trechos);
 
-        char* pointer = textoString;
-        while((pointer = strstr(pointer,trechoString)) != NULL){
-            int pos = pointer - textoString;
-            fprintf(fp_saida,"%d,%ld\n",pos,pos + strlen(trechoString)-1);
-
-            pointer += strlen(trechoString);
+        char* pointer = strstr(textoString,trechoString);
+        if(pointer == NULL){
+            continue;
         }
+        int pos = pointer - textoString;
+        fprintf(fp_saida,"%d,%ld\n",pos,pos + strlen(trechoString)-1);
+
         free(trechoString);
     }
 
